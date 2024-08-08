@@ -43,9 +43,11 @@ class Model:
         """
         Initializes the Model with an empty board and sets the starting player to 'X'.
         """  
-        self.board = Board(['','','','','','','','','']) #create board from indeces 0-8
-        self.player = 'X' #create player and set to 'X'
-        self.winner = None  #set winner to none
+        logger.info("Initializing Model")
+        self.board = Board(['','','','','','','','',''])  # create board from indices 0-8
+        self.player = 'X'  # create player and set to 'X'
+        self.winner = None  # set winner to none
+        logger.debug(f"Initial board state: {self.board.squares}, starting player: {self.player}")
 
     def get_current_player(self) -> str:
         """
@@ -56,21 +58,22 @@ class Model:
         str
             The current player ('X' or 'O').
         """
+        logger.info("Getting current player")
         return self.player
 
     def change_player(self) -> None:
         """
         Switches the current player from 'X' to 'O' or from 'O' to 'X'.
         """
+        logger.info("Changing player")
         self.player = 'O' if self.player == 'X' else 'X'
+        logger.debug(f"New current player: {self.player}")
 
     def set_winner(self) -> None:
         """
         Checks for a winner and sets the winner attribute if there is one.
         """
-        """
-        need to implement logic, check diagonals, check rows, check columns, then do self.winner == 'X' or 'O' etc.
-        """
+        logger.info("Setting winner")
         board = self.board.squares
         winning_combinations = [
             (0, 1, 2), (3, 4, 5), (6, 7, 8),  # rows
@@ -80,8 +83,10 @@ class Model:
         for combo in winning_combinations:
             if board[combo[0]] == board[combo[1]] == board[combo[2]] and board[combo[0]] != '':
                 self.winner = board[combo[0]]
+                logger.debug(f"Winner found: {self.winner}")
                 return
         self.winner = None  # No winner yet
+        logger.debug("No winner found")
 
     def get_winner(self) -> Optional[str]:
         """
@@ -92,6 +97,7 @@ class Model:
         Optional[str]
             The winner of the game, or None if there is no winner yet.
         """
+        logger.info("Getting winner")
         return self.winner
 
     def get_board_state(self) -> list[str]:
@@ -103,8 +109,10 @@ class Model:
         list[str]
             A copy of the current board state.
         """
-        #return Board(squares=self.board.squares.copy()) #return copy list of board as a board object, passed original test
-        return self.board.squares.copy() 
+        logger.info("Getting board state")
+        board_state = self.board.squares.copy()
+        logger.debug(f"Board state: {board_state}")
+        return board_state
 
     def move(self, index: int) -> None:
         """
@@ -119,11 +127,13 @@ class Model:
         ------
         ValueError
             If the specified index is already occupied.
-        """        
+        """
+        logger.info(f"Making move at index: {index}")
         if self.board.squares[index] != '':
-            logger.error(f'Move failed at index {index} - square already occupied')
+            logger.error(f"Move failed at index {index} - square already occupied")
             raise ValueError(SQUARE_OCCUPIED_ERROR_MSG)
 
         self.board.squares[index] = self.player
+        logger.debug(f"Board state after move: {self.board.squares}")
         self.set_winner()
         self.change_player()
