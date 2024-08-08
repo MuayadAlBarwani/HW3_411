@@ -42,8 +42,11 @@ class View:
         Response
             A Flask response object containing the board state.
         """
-
-        return jsonify({'board': board}) 
+        logger.info("Returning board state")
+        board_dict = {'board': board.squares}
+        response = make_response(jsonify(board_dict))
+        logger.debug(f"Board state response: {response.get_json()}")
+        return response
         
     def get_winner(self, winner: str = None) -> Response:
         """
@@ -67,10 +70,12 @@ class View:
         Response
             A Flask response object containing the winner.
         """
-        return jsonify({'winner': winner})
+        logger.info("Returning winner")
+        response = make_response(jsonify({'winner': winner}))
+        logger.debug(f"Winner response: {response.get_json()}")
+        return response
 
     def error(self, error: str) -> Response:
-
         """
         output example:
         {
@@ -90,7 +95,8 @@ class View:
         Response
             A Flask response object containing the error message.
         """
-        response = jsonify({'error': error})
+        logger.error(f"Returning error: {error}")
+        response = make_response(jsonify({'error': error}))
         response.status_code = 400
-        
+        logger.debug(f"Error response: {response.get_json()}")
         return response
