@@ -43,8 +43,7 @@ class View:
             A Flask response object containing the board state.
         """
         logger.info("Returning board state")
-        board_dict = {'board': board.squares}
-        response = make_response(jsonify(board_dict))
+        response = jsonify({'board': board})
         logger.debug(f"Board state response: {response.get_json()}")
         return response
         
@@ -71,7 +70,7 @@ class View:
             A Flask response object containing the winner.
         """
         logger.info("Returning winner")
-        response = make_response(jsonify({'winner': winner}))
+        response = jsonify({'winner': winner})
         logger.debug(f"Winner response: {response.get_json()}")
         return response
 
@@ -96,7 +95,7 @@ class View:
             A Flask response object containing the error message.
         """
         logger.error(f"Returning error: {error}")
-        response = make_response(jsonify({'error': error}))
+        response = jsonify({'error': error})
         response.status_code = 400
         logger.debug(f"Error response: {response.get_json()}")
         return response
