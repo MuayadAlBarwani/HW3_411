@@ -78,7 +78,7 @@ class Model:
             (0, 4, 8), (2, 4, 6)              # diagonals
         ]
         for combo in winning_combinations:
-            if board[combo[0]] == board[combo[1]] == board[combo[2]] and board[combo[0]] != ' ':
+            if board[combo[0]] == board[combo[1]] == board[combo[2]] and board[combo[0]] != '':
                 self.winner = board[combo[0]]
                 return
         self.winner = None  # No winner yet
@@ -103,7 +103,8 @@ class Model:
         list[str]
             A copy of the current board state.
         """
-        return Board(squares=self.board.squares.copy()) #return copy list of board
+        #return Board(squares=self.board.squares.copy()) #return copy list of board as a board object, passed original test
+        return self.board.squares.copy() 
 
     def move(self, index: int) -> None:
         """
@@ -124,5 +125,5 @@ class Model:
             raise ValueError(SQUARE_OCCUPIED_ERROR_MSG)
 
         self.board.squares[index] = self.player
-        #self.set_winner()
+        self.set_winner()
         self.change_player()
