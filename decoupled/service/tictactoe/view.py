@@ -90,4 +90,7 @@ class View:
         Response
             A Flask response object containing the error message.
         """
-        return jsonify({'error': error}), 400  #status code 200 means ok request, 400 means bad request, 404 means request not found
+        response = jsonify({'error': error})
+        response.status_code = 400
+        
+        return response

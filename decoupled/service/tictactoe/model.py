@@ -43,7 +43,7 @@ class Model:
         """
         Initializes the Model with an empty board and sets the starting player to 'X'.
         """  
-        self.board = Board([' ',' ',' ',' ',' ',' ',' ',' ',' ']) #create board from indeces 0-8
+        self.board = Board(['','','','','','','','','']) #create board from indeces 0-8
         self.player = 'X' #create player and set to 'X'
         self.winner = None  #set winner to none
 
@@ -103,7 +103,7 @@ class Model:
         list[str]
             A copy of the current board state.
         """
-        return self.board.squares[:] #return copy list of board
+        return Board(squares=self.board.squares.copy()) #return copy list of board
 
     def move(self, index: int) -> None:
         """
@@ -119,10 +119,10 @@ class Model:
         ValueError
             If the specified index is already occupied.
         """        
-        if self.board.squares[index] != ' ':
+        if self.board.squares[index] != '':
             logger.error(f'Move failed at index {index} - square already occupied')
             raise ValueError(SQUARE_OCCUPIED_ERROR_MSG)
 
         self.board.squares[index] = self.player
-        self.set_winner()
+        #self.set_winner()
         self.change_player()
