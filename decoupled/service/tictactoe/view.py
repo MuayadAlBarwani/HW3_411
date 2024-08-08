@@ -43,7 +43,7 @@ class View:
             A Flask response object containing the board state.
         """
 
-        return jsonify({'board': board.squares}) 
+        return jsonify({'board': board}) 
         
     def get_winner(self, winner: str = None) -> Response:
         """
