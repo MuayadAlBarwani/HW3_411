@@ -59,7 +59,7 @@ def test_change_player(model):
 
 def test_get_board_state(model):
     model.board.squares = ["X", "O", "X", "O", "X", "O", "", "", ""]
-    assert model.get_board_state() == ["X", "O", "X", "O", "X", "O", "", "", ""]
+    assert model.get_board_state() == ["X", "O", "X", "O", "X", "O", "", "", ""] #made it so that this wants a list removed "Board"
 
 def test_move_occupied(model):
     model.board.squares = ["X", "O", "X", "O", "X", "O", "", "", ""]
